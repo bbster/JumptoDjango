@@ -57,5 +57,5 @@ def question_create(request):
     # 두번째 파라미터에는 응답으로 표시할 html파일(템플릿)이 들어있고
     # 세번째 파라미터에는 응답으로 넘기고 싶은 딕셔너리(context) 정보가 들어있다.
     # context의 용도 / form 이라는 쿼리셋을 dic형태로 담아 리턴 해준다
-    # context에는 forms/QuestionForm에서 정의한 subject, content에 정보가 담겨서 넘어간다.
+    # context에는 Question 모델에서 정의한 컬럼명과 데이터 정보가 dict 형식으로 담겨서 넘어간다.
 ```
