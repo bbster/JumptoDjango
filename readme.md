@@ -1,4 +1,4 @@
-# Wikidocs Django clone coding
+# 점프투장고 clone coding
 ## 환경설정
 ```bash
 verision
