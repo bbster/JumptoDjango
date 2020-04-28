@@ -16,13 +16,9 @@
             <td>{{ forloop.counter }}</td>
             <td>
                 <a href="{% url 'pybo:detail' question.id %}">{{ question.subject }}</a>
-
             </td>
             <td>{{ question.create_date }}</td>
-
         </tr>
-
-
         {% endfor %}
         {% else %}
         <tr>
