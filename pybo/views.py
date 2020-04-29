@@ -1,6 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
-from django.views.decorators.http import require_POST
 
 from pybo.forms import QuestionForm, AnswerForm
 from pybo.models import Question
@@ -47,6 +46,7 @@ def answer_create(request, question_id):
         if form.is_valid():
             answer = form.save(commit=False)
             answer.create_date = timezone.now()
+            answer.question = question
             answer.save()
             return redirect('pybo:detail', question_id=question.id)
     else:

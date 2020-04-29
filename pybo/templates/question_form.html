@@ -27,6 +27,9 @@
             <textarea class="form-control" name="content"
                       id="content" rows="10">{{ form.content.value|default_if_none:'' }}</textarea>
         </div>
+        <td>
+            <a href="{% url 'pybo:index' %}" class="btn btn-primary">목록</a>
+        </td>
         <button type="submit" class="btn btn-primary">저장하기</button>
     </form>
 </div>
