@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 
@@ -53,3 +54,13 @@ def answer_create(request, question_id):
         form = AnswerForm()
     context = {'question': question, 'form': form}
     return render(request, 'question_detail.html', context)
+
+
+def index(request):
+    page = request.GET.get('page', '1')
+    question_list = Question.objects.order_by('-create_date')
+    paginator = Paginator(question_list, 10)
+    page_obj = paginator.get_page(page)
+
+    context = {'question_list' : page_obj}
+    return render(request, 'question_list.html', context)

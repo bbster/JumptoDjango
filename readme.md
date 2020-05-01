@@ -92,8 +92,28 @@ def my_view(request):
 **kwargs : *args와 비슷한 기능을 한다.
  - 튜플형태가 아닌 키워드를 중심으로 DICT 형태로 데이터를 입력받는다.
  - dict형태의 데이터를 처리함 
+```
+```python
+def test(*args, **kwargs):
+    print('args', args)
+    print('kwargs', kwargs)
 
-*args, **kwargs 두가지다 가변수의 값을 처리하고자 할때 사용한다.
- - *args로 json형태의 데이터를 받으면 dict형태로 출력됨.
-  
+lst = [1,2,3,4,5] # 리스트
+dict = {'a':1,'b':2,'c':3,'d':4}
+tuple = (1,2,3,4,5,)
+st = {1,2,3,4}
+
+test(lst,tuple,st,dict)
+test(*lst,*tuple,*st,**dict)  
+# *, ** 붙는것은 데이터를 매개변수로 보내기전에 데이터를 풀어서 전달한다
+# [1,2,3,4,5] < 0번 이아니라 리스트에 첫번재 값이 0번 위치에 저장된다. 
+# 정리하자면 변수에 저장되어있는 데이터 형태 그대로 전달되느냐
+# 변수에 저장되어 있는 데이터를 풀어서 전달되느냐 차이이다.
+```
+### request.GET.get() 이란 무엇인고
+```bash
+먼저 장고코어에 from django.core.paginator import Paginator 라는 라이브러리를 사용
+http://127.0.0.1:8000/pybo/?page=1
+page = request.GET.get('page', '1')
+page와 정수값을 key:value 형식으로 저장해주는 기능을 함 
 ```
