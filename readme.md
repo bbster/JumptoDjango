@@ -10,6 +10,10 @@ ipython==7.13.0
 mysqlclient==1.4.6
 pytest-django==3.9.0
 ```
+```bash
+mysqlclient / whl 다운로드
+https://www.lfd.uci.edu/~gohlke/pythonlibs/#mysqlclient
+```
 ### Error 
 ```bash
  - mysql access denied user - 
