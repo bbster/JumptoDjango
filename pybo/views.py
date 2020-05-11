@@ -20,6 +20,7 @@ def detail(request, question_id):
     return render(request, 'pybo/question_detail.html', context)
 
 
+@login_required(login_url='common:login')
 def answer_create(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     question.answer_set.create(content=request.POST.get('content'), create_date=timezone.now())
@@ -61,7 +62,7 @@ def question_modify(request, question_id):
             return redirect('pybo:detail', question_id=question.id)
     else:
         form = QuestionForm(instance=question)
-    context = {'form':form}
+    context = {'form': form}
     return render(request, 'pybo/question_form.html', context)
 
 
@@ -131,5 +132,5 @@ def index(request):
     paginator = Paginator(question_list, 10)
     page_obj = paginator.get_page(page)
 
-    context = {'question_list' : page_obj}
+    context = {'question_list': page_obj}
     return render(request, 'pybo/question_list.html', context)

@@ -4,7 +4,7 @@ from common.forms import UserForm
 
 
 def signup(request):
-    if request.method=='POST':
+    if request.method == 'POST':
         form = UserForm(request.POST)
         if form.is_valid():
             form.save()
@@ -15,5 +15,4 @@ def signup(request):
             return redirect('index')
     else:
         form = UserForm()
-
-    return render(request, 'common/signup.html', {'form':form})
+    return render(request, 'common/signup.html', {'form': form})
