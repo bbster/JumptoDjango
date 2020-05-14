@@ -3,7 +3,6 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
-
 from pybo.forms import QuestionForm, AnswerForm, CommentForm
 from pybo.models import Question, Answer, Comment
 
@@ -49,7 +48,7 @@ def question_create(request):
 def question_modify(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     if request.user != question.author:
-        messages.error(request, '수정권환이 없습니다.')
+        messages.error(request, '수정권한이 없습니다.')
         return redirect('pybo:detail', question_id=question.id)
 
     if request.method == "POST":
@@ -151,7 +150,7 @@ def comment_create_question(request, question_id):
 def comment_modify_question(request, question_id):
     comment = get_object_or_404(Comment, pk=question_id)
     if request.user != comment.author:
-        messages.erros(request, '댓글수정권한이 없습니다.')
+        messages.erros(request, '댓글 수정 권한이 없습니다.')
         return redirect('pybo:detail', question_id=comment.question.id)
 
     if request.method == "POST":
@@ -172,7 +171,7 @@ def comment_modify_question(request, question_id):
 def comment_delete_question(request, comment_id):
     comment = get_object_or_404(Comment, pk=comment_id)
     if request.user != comment.author:
-        messages.error(request, '댓글삭제권한이 없습니다')
+        messages.error(request, '댓글 삭제 권한이 없습니다')
         return redirect('pybo:detail', question_id=comment.question_id)
     else:
         comment.delete()
@@ -201,7 +200,7 @@ def comment_create_answer(request, answer_id):
 def comment_modify_answer(request, comment_id):
     comment = get_object_or_404(Comment, pk=comment_id)
     if request.user != comment.author:
-        messages.error(request, '댓글수정권한이 없습니다')
+        messages.error(request, '댓글 수정 권한이 없습니다')
         return redirect('pybo:detail', question_id=comment.answer.question.id)
 
     if request.method == "POST":
@@ -222,7 +221,7 @@ def comment_modify_answer(request, comment_id):
 def comment_delete_answer(request, comment_id):
     comment = get_object_or_404(Comment, pk=comment_id)
     if request.user != comment.author:
-        messages.error(request, '댓글삭제권한이 없습니다')
+        messages.error(request, '댓글 삭제 권한이 없습니다')
         return redirect('pybo:detail', question_id=comment.answer.question.id)
     else:
         comment.delete()
