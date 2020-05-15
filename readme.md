@@ -110,14 +110,35 @@ st = {1,2,3,4}
 test(lst,tuple,st,dict)
 test(*lst,*tuple,*st,**dict)  
 # *, ** 붙는것은 데이터를 매개변수로 보내기전에 데이터를 풀어서 전달한다
-# [1,2,3,4,5] < 0번 이아니라 리스트에 첫번재 값이 0번 위치에 저장된다. 
+# [1,2,3,4,5] < 0번 이아니라 리스트에 첫번재 값 1이 0번 위치에 저장된다. 
 # 정리하자면 변수에 저장되어있는 데이터 형태 그대로 전달되느냐
 # 변수에 저장되어 있는 데이터를 풀어서 전달되느냐 차이이다.
 ```
-### request.GET.get() 이란 무엇인고
+### request.GET.get()
 ```bash
 먼저 장고코어에 from django.core.paginator import Paginator 라는 라이브러리를 사용
 http://127.0.0.1:8000/pybo/?page=1
 page = request.GET.get('page', '1')
 page와 정수값을 key:value 형식으로 저장해주는 기능을 함 
+```
+### Djanog Q 함수
+```bash
+django에서 and, or, not 조건으로 데이터를 조회하기 위해 제공해주는 함수
+```
+```python
+# or 연산
+from django.db.models import Q
+queryset = User.objects.filter(
+    Q(first_name__startswith='R') | Q(last_name__startswith='D')
+)
+
+# and 연산
+queryset = User.objects.filter(
+    Q(first_name__startswith='R') & Q(last_name__startswith='D')
+)
+
+# not 연산
+ queryset = User.objects.filter(
+    Q(first_name__startswith='R') & ~Q(last_name__startswith='Z')
+)
 ```

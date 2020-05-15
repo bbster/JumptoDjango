@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.db.models import Q, Count
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from pybo.forms import QuestionForm, AnswerForm, CommentForm
@@ -228,16 +229,6 @@ def comment_delete_answer(request, comment_id):
     return redirect('pybo:detail', question_id=comment.answer.question.id)
 
 
-def index(request):
-    page = request.GET.get('page', '1')
-    question_list = Question.objects.order_by('-create_date')
-    paginator = Paginator(question_list, 10)
-    page_obj = paginator.get_page(page)
-
-    context = {'question_list': page_obj}
-    return render(request, 'pybo/question_list.html', context)
-
-
 @login_required(login_url='common:login')
 def vote_question(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
@@ -256,3 +247,30 @@ def vote_answer(request, answer_id):
     else:
         answer.voter.add(request.user)
     return redirect('pybo:detail', question_id=answer.question.id)
+
+
+def index(request):
+    page = request.GET.get('page', '1')
+    kw = request.GET.get('kw', '')
+    so = request.GET.get('so', 'recent')
+
+    if so == 'recommend':
+        question_list = Question.objects.annotate(num_voter=Count('voter')).order_by('-num_voter', '-create_date')
+    elif so == 'popular':
+        question_list = Question.objects.annotate(num_answer=Count('answer')).order_by('-num_answer', '-create_date')
+    else:
+        question_list = Question.objects.order_by('-create_date')
+
+    if kw:
+        question_list = question_list.filter(
+            Q(subject__icontains=kw) |
+            Q(subject__icontains=kw) |
+            Q(author__username__icontains=kw) |
+            Q(answer__author__username__icontains=kw)
+        ).distinct()
+
+    paginator = Paginator(question_list, 10)
+    page_obj = paginator.get_page(page)
+
+    context = {'question_list': page_obj, 'page': page, 'kw': kw, 'so' :so}
+    return render(request, 'pybo/question_list.html', context)
