@@ -1,7 +1,7 @@
 # 점프투장고 clone coding
 ## 환경설정
 ```bash
-verision
+version
 python == 3.8.1
 Django==3.0.5
 django-test-plus==1.4.0
